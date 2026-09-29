@@ -6,6 +6,8 @@ import picocli.CommandLine;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintWriter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,5 +25,18 @@ class FwudsApplicationTest {
                 "--min-wus", "0.2", "--seed", "42", "--max-slides", "1", "--output", output.toString());
         assertEquals(0, status);
         assertTrue(Files.readString(output).startsWith("dataset,algorithm,seed,window,pattern,wus"));
+    }
+
+    @Test void subcommandsExposeStandardHelp() {
+        ByteArrayOutputStream captured = new ByteArrayOutputStream();
+        CommandLine command = new CommandLine(new FwudsApplication());
+        command.setOut(new PrintWriter(captured, true));
+
+        assertEquals(0, command.execute("mine", "--help"));
+        assertTrue(captured.toString().contains("--algorithm"));
+
+        captured.reset();
+        assertEquals(0, command.execute("datasets", "verify", "--help"));
+        assertTrue(captured.toString().contains("--manifest"));
     }
 }

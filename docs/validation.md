@@ -36,7 +36,8 @@ Chạy:
 ## Nhật ký xác nhận cục bộ 2026-09-30
 
 - JDK Eclipse Temurin `21.0.12.1`, Windows 11, heap benchmark `-Xms1g -Xmx8g`.
-- `mvn verify`: 10 test, không có failure/error.
+- `mvn verify`: 11 test, không có failure/error.
+- `scripts/run-learning-demo.ps1`: `oracle`, `ct`, `dwt` cùng 20 pattern rows trên 2 window; tập pattern và `wus` khớp trong tolerance `1e-12`.
 - `datasets verify`: Retail 88.162/16.470, Accidents 340.183/468, BMS-POS 515.597/1.657, Kosarak 990.002/41.270 và Susy 5.000.000/179 đều `OK` cùng checksum trong manifest.
 - Pilot Retail/DWT, 51 cửa sổ, một warm-up và một repetition: `minwus=0.003` khoảng 22,6 s; `0.002` khoảng 56,2 s; `0.001` khoảng 276,0 s. Hai ngưỡng thấp hơn chưa hoàn tất trong pilot vì thời gian tăng nhanh.
 - Kiểm tra chéo Retail tại `minwus=0.003`, không warm-up: CT và DWT cùng 71.688 pattern và cùng hash `3abbdc7005b46a0bfebbedbb2091e7c2a4fed08abe86e62b1073518dfb760f2a` trên 51 cửa sổ. Runtime đơn lẻ chỉ dùng để kiểm tra luồng chạy, không phải kết quả benchmark chính thức.

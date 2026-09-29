@@ -10,13 +10,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.Callable;
 
-@Command(name = "benchmark", description = "Run repeatable end-to-end FWUDS measurements.")
+@Command(name = "benchmark", mixinStandardHelpOptions = true,
+        description = "Run repeatable end-to-end FWUDS measurements.")
 final class BenchmarkCommand implements Callable<Integer> {
     @Mixin MiningOptions options;
 
-    @Option(names = "--warmups", defaultValue = "1") int warmups;
-    @Option(names = "--repetitions", defaultValue = "5") int repetitions;
-    @Option(names = "--output", required = true) Path output;
+    @Option(names = "--warmups", defaultValue = "1", description = "Warm-up runs excluded from CSV") int warmups;
+    @Option(names = "--repetitions", defaultValue = "5", description = "Measured runs written to CSV") int repetitions;
+    @Option(names = "--output", required = true, description = "Benchmark summary CSV") Path output;
 
     @Override public Integer call() throws Exception {
         if (warmups < 0 || repetitions <= 0) throw new IllegalArgumentException("Invalid warmup/repetition count");

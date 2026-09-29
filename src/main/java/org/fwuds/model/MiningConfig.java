@@ -1,5 +1,6 @@
 package org.fwuds.model;
 
+/** Immutable parameters shared by the input pipeline and every miner implementation. */
 public record MiningConfig(int windowPanes, int paneSize, int weightBatchSize, double minWus, long seed) {
     public MiningConfig {
         if (windowPanes <= 0 || paneSize <= 0 || weightBatchSize <= 0) {

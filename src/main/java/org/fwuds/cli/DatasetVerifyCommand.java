@@ -15,7 +15,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-@Command(name = "verify", description = "Verify downloaded datasets against their manifest.")
+@Command(name = "verify", mixinStandardHelpOptions = true,
+        description = "Verify downloaded datasets against their manifest.")
 final class DatasetVerifyCommand implements Callable<Integer> {
     @Option(names = "--manifest", defaultValue = "data/datasets.csv") Path manifest;
     @Option(names = "--data-dir", defaultValue = "data/raw") Path dataDir;

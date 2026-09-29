@@ -11,7 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.Callable;
 
-@Command(name = "mine", description = "Mine FWUPs for every complete sliding window.")
+@Command(name = "mine", mixinStandardHelpOptions = true,
+        description = "Mine FWUPs for every complete sliding window.")
 final class MineCommand implements Callable<Integer> {
     @Mixin MiningOptions options;
 

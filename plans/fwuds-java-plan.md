@@ -8,5 +8,7 @@
 - [x] Smoke-test CLI/benchmark và luồng tải/chuẩn hóa Retail, BMS-POS.
 - [x] Tải, chuẩn hóa và xác minh đủ 5 dataset.
 - [x] Pilot Retail/DWT và kiểm tra hash chéo CT/DWT trên dữ liệu thật.
+- [x] Biên soạn lộ trình học, giải thích công thức/thuật toán/code và hướng dẫn chạy thực nghiệm.
+- [x] Thêm learning demo tự động, standard CLI help và Javadoc cho public entry points.
 - [ ] Chạy đủ benchmark paper-like dài hạn (chia theo dataset/threshold; xem `docs/validation.md`).
 - [ ] Bổ sung `dFWUNL-stream` sau khi có tài liệu tham khảo [9] hoặc source code của tác giả.
