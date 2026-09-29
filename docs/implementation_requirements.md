@@ -11,6 +11,7 @@
 ## Trọng số động và input
 
 - File FIMI/SPMF: một dòng là một transaction; token `id` có quantity 1, token `id:quantity` biểu diễn dữ liệu định lượng.
+- Bản Susy từ mirror SPMF dùng item ID từ 0 và chứa item trùng trong cùng transaction. Script tải dịch ID thêm 1 và gộp các lần xuất hiện thành `item:quantity`, nhờ đó bảo toàn utility của 19 token gốc. File quan sát được có 179 item ID phân biệt, khác con số 190 được báo cáo trong bài báo; manifest dùng 179 để kiểm tra dữ liệu thực tế.
 - Weight batch độc lập với pane. Batch index của transaction là `sequence / weightBatchSize`.
 - Weight mặc định là số nguyên `[1,10]`, sinh từ SplitMix64 tự cài đặt với tuple `(seed,batch,item)`. Cách này không phụ thuộc thứ tự duyệt collection hay phiên bản JDK.
 - Seed mặc định cho thí nghiệm là `42`; mọi CSV phải ghi seed và cấu hình.
@@ -33,5 +34,5 @@
 ## CLI và output
 
 - `mine` xuất một dòng CSV cho mỗi pattern/cửa sổ và tóm tắt trên console.
-- `benchmark` tạo miner mới cho từng logical run trong cùng JVM, không ghi từng pattern; hash kết quả chứng minh các repetition trả cùng nội dung. Script paper-like gọi mỗi cấu hình trong một JVM riêng.
+- `benchmark` tạo miner mới cho từng logical run trong cùng JVM, không ghi từng pattern; hash kết quả chuẩn hóa theo window và itemset để chứng minh các repetition/hai thuật toán trả cùng tập pattern mà không phụ thuộc bit làm tròn `double`. Script paper-like gọi mỗi cấu hình trong một JVM riêng.
 - Runtime chỉ bao quanh initialize/mine/slide, không tính đọc file. Peak heap lấy từ `MemoryPoolMXBean`; CSV ghi JVM và OS để tránh so sánh sai môi trường.

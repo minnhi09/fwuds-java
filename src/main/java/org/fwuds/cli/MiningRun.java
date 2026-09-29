@@ -72,7 +72,6 @@ final class MiningRun {
         digest.update(Long.toString(result.windowIndex()).getBytes(StandardCharsets.UTF_8));
         for (PatternResult pattern : result.patterns()) {
             digest.update(pattern.itemset().toString().getBytes(StandardCharsets.UTF_8));
-            digest.update(Long.toHexString(Double.doubleToLongBits(pattern.wus())).getBytes(StandardCharsets.UTF_8));
         }
     }
 

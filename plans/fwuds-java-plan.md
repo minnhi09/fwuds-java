@@ -6,5 +6,7 @@
 - [x] Thêm dataset manifest, download script và tài liệu nghiên cứu.
 - [x] Chạy `mvn verify` trên JDK 21 và sửa mọi sai khác với oracle.
 - [x] Smoke-test CLI/benchmark và luồng tải/chuẩn hóa Retail, BMS-POS.
-- [ ] Tải đủ 5 dataset và chạy benchmark paper-like dài hạn.
+- [x] Tải, chuẩn hóa và xác minh đủ 5 dataset.
+- [x] Pilot Retail/DWT và kiểm tra hash chéo CT/DWT trên dữ liệu thật.
+- [ ] Chạy đủ benchmark paper-like dài hạn (chia theo dataset/threshold; xem `docs/validation.md`).
 - [ ] Bổ sung `dFWUNL-stream` sau khi có tài liệu tham khảo [9] hoặc source code của tác giả.

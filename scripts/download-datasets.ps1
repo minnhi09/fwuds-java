@@ -8,6 +8,53 @@ $ErrorActionPreference = 'Stop'
 $destinationPath = [System.IO.Path]::GetFullPath($Destination)
 New-Item -ItemType Directory -Force -Path $destinationPath | Out-Null
 
+if (-not ('Fwuds.SusyNormalizer' -as [type])) {
+    Add-Type -TypeDefinition @'
+using System;
+using System.Globalization;
+using System.IO;
+using System.Text;
+
+namespace Fwuds {
+    public static class SusyNormalizer {
+        public static void Normalize(string input, string output) {
+            using (var reader = new StreamReader(input))
+            using (var writer = new StreamWriter(output, false, new UTF8Encoding(false))) {
+                string line;
+                while ((line = reader.ReadLine()) != null) {
+                    if (String.IsNullOrWhiteSpace(line)) continue;
+                    string[] tokens = line.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+                    var normalized = new StringBuilder(line.Length + 16);
+                    int previous = -1;
+                    int quantity = 0;
+                    foreach (string token in tokens) {
+                        int item = Int32.Parse(token, CultureInfo.InvariantCulture) + 1;
+                        if (item < previous) throw new InvalidDataException("Susy row is not sorted: " + line);
+                        if (item == previous) {
+                            quantity++;
+                            continue;
+                        }
+                        Append(normalized, previous, quantity);
+                        previous = item;
+                        quantity = 1;
+                    }
+                    Append(normalized, previous, quantity);
+                    writer.WriteLine(normalized.ToString());
+                }
+            }
+        }
+
+        private static void Append(StringBuilder output, int item, int quantity) {
+            if (quantity == 0) return;
+            if (output.Length > 0) output.Append(' ');
+            output.Append(item);
+            if (quantity > 1) output.Append(':').Append(quantity);
+        }
+    }
+}
+'@
+}
+
 $datasets = @{
     'Retail' = @{ Url = 'https://www.philippe-fournier-viger.com/spmf/publicdatasets/retail.txt'; File = 'retail.dat'; Kind = 'raw' }
     'Accidents' = @{ Url = 'https://www.philippe-fournier-viger.com/spmf/publicdatasets/accidents.txt'; File = 'accidents.dat'; Kind = 'raw' }
@@ -66,7 +113,9 @@ foreach ($datasetName in $Name) {
                 Expand-Archive -LiteralPath $archive -DestinationPath $extractDir
                 $source = Get-ChildItem -LiteralPath $extractDir -File -Recurse | Where-Object { $_.Name -ieq 'Susy.txt' } | Select-Object -First 1
                 if ($null -eq $source) { throw 'Susy.txt was not found in the downloaded archive' }
-                Copy-Item -LiteralPath $source.FullName -Destination $target
+                # The source is zero-based and may repeat an item in one row. Shift IDs and
+                # aggregate repeated occurrences as quantitative tokens to preserve utility.
+                [Fwuds.SusyNormalizer]::Normalize($source.FullName, $target)
             } finally {
                 if (Test-Path -LiteralPath $extractDir) { Remove-Item -LiteralPath $extractDir -Recurse -Force }
             }
