@@ -1,0 +1,6 @@
+name,file,url,transactions,items,sha256
+Retail,retail.dat,https://www.philippe-fournier-viger.com/spmf/publicdatasets/retail.txt,88162,16470,732c26de19888cb570d3fbb97e47206a9b1c0ce064f85dc1403314ba38f04eaa
+Accidents,accidents.dat,https://www.philippe-fournier-viger.com/spmf/publicdatasets/accidents.txt,340183,468,-
+BMS-POS,bms-pos.dat,https://storage.googleapis.com/set-similarity-search/BMS-POS_dup_dr.inp.gz,515597,1657,1a72d258ac1a979dad1821aa3ac827f4f56598ed4dec8c055c77925d9f0e3dae
+Kosarak,kosarak.dat,https://www.philippe-fournier-viger.com/spmf/publicdatasets/kosarak.dat,990002,41270,-
+Susy,susy.txt,https://www.philippe-fournier-viger.com/spmf/publicdatasets/zhangzhongjie/Susy.zip,5000000,190,-
